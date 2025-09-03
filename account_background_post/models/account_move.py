@@ -8,6 +8,13 @@ class AccountMove(models.Model):
     background_post = fields.Boolean(
         help="If True then this invoice will be validated in the background by cron.", copy=False, tracking=True
     )
+    background_post_user_id = fields.Many2one(
+        "res.users",
+        string="Background Post User",
+        help="If background_post is set to True, this field holds the user that requested the background posting.",
+        copy=False,
+        tracking=True,
+    )
 
     def get_internal_partners(self):
         res = self.env["res.partner"]
