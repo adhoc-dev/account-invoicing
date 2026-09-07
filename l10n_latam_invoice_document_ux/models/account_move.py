@@ -1,5 +1,5 @@
 from odoo import _, api, models
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 
 
 class AccountMove(models.Model):
@@ -10,6 +10,6 @@ class AccountMove(models.Model):
         """Check that the journal and the allows to post in the move's company."""
         moves = self.filtered(lambda x: x.state == "posted" and x.journal_id.l10n_latam_use_documents)
         if moves:
-            raise UserError(
+            raise ValidationError(
                 _("You cannot change the journal of a posted move (%s).") % ", ".join(moves.mapped("display_name"))
             )
